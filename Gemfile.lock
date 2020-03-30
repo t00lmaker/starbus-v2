@@ -144,7 +144,6 @@ GEM
       rake (>= 0.8.1)
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
-    rufo (0.12.0)
     safe_yaml (1.0.5)
     simplecov (0.16.1)
       docile (~> 1.1)
@@ -191,7 +190,6 @@ DEPENDENCIES
   rspec
   rubocop
   ruby-debug-ide
-  rufo
   strans-client
   timerizer
   webmock

@@ -30,13 +30,11 @@ Esse repositorio guarda a api e a landpage do projeto.
 
  ### Comandos ulteis
 
-
-
 Avalia o codigo e corrige o que pode ser corrigido.
 bundle exec rubocop -a -x
 
-Corrige o formatação codigo.
-bundle exec rufo .
+Coveralls report
+bundle exec coveralls report
 
 Setup banco em test
 rake db:setup RAILS_ENV=test

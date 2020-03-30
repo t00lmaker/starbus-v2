@@ -40,7 +40,6 @@ group :development do
   gem "debase"
   gem "rubocop", require: false
   gem "ruby-debug-ide"
-  gem "rufo", require: false
 end
 
 group :test do
