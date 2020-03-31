@@ -11,5 +11,5 @@ rvm:
   - 2.6
 script:
   - rake db:setup RAILS_ENV=test
-  - bundle exec rspec
+  - rspec
   - bundle exec rubocop -a -x
