@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "yaml"
-require "otr-activerecord"
 require "bundler/setup"
 
 require_relative "starbus-api"
