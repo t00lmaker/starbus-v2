@@ -9,5 +9,5 @@ rvm:
   - 2.6
 script:
   - rake db:setup RAILS_ENV=test
-  - bundle exec coveralls push 
+  - rspec
   - bundle exec rubocop -a -x
