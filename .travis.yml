@@ -2,6 +2,8 @@ addons:
   postgresql: 9.6
 before_install:
   - gem install bundler
+after_success:
+  - bundle exec coveralls push 
 language: ruby
 dist: trusty
 rvm:
