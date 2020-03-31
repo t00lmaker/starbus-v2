@@ -1,0 +1,13 @@
+addons:
+  postgresql: 9.6
+before_install:
+  - gem install bundler
+language: ruby
+dist: trusty
+rvm:
+  - 2.5
+  - 2.6
+script:
+  - rake db:setup RAILS_ENV=test
+  - rspec
+  - bundle exec rubocop -a -x
