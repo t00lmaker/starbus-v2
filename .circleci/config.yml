@@ -6,8 +6,14 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
-      environment:
-          RAILS_ENV: test
+        environment:
+            RAILS_ENV: test
+      - image: circleci/postgres:9.5-alpine  # service image
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: starbus_test
+          POSTGRES_PASSWORD: ""
+
     executor: ruby/default
     steps:
       - checkout
