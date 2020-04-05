@@ -186,10 +186,11 @@ module StarBus
       end
       put ":id", rabl: "user.rabl" do
         @user = User.find(params[:id]) rescue nil
-        unless @user
+        if @user
+          @user.update(params)  
+        else
           error!({ erro: "User not found", detalhe: "Check id in param." }, 404)
         end
-        @user.update(params)
       end
 
       desc "Disable user by id"
@@ -197,12 +198,12 @@ module StarBus
         requires :id, desc: "User's id to disabled."
       end
       delete ":id", rabl: "user.rabl" do
-        @user = begin
-            User.find(params[:id])
-                rescue StandardError
-                  nil
-          end
-        @user.update(active: false)
+        @user = User.find(params[:id]) rescue nil
+        if @user
+          @user.update(active: false)
+        else
+          error!({ erro: "User not found", detalhe: "Check id in param." }, 404)
+        end    
       end
 
       desc "Create a user's sugestion to api"
@@ -247,7 +248,7 @@ module StarBus
         end
       end
 
-      desc "Loade all lines to source (API Integrah)."
+      desc "Load all lines to source (API Integrah)."
       get "load" do
         LoadLinesStops.new.init
       end
@@ -350,7 +351,7 @@ module StarBus
       requires :type, values: %w[con seg mov pon ace est]
       requires :code
     end
-    resource :interaction do
+    resource :interactions do
       get ":type/stop/:code", rabl: "interactions.rabl" do
         @type = Interaction.type_s[params[:type]]
         stop = Stop.find_by_code(params[:code])
@@ -375,11 +376,10 @@ module StarBus
       params do
         requires :evaluation, values: Interaction.evaluations.values
         requires :comment
-        requires :id_facebook
       end
       post ":type/stop/:code", rabl: "result.rabl" do
         i = Interaction.new
-        i.user = User.find_by_id_facebook(params[:id_facebook])
+        i.user = @current_user
         i.type_ = params[:type]
         i.comment = params[:comment]
         i.evaluation = params[:evaluation]
@@ -400,7 +400,6 @@ module StarBus
         requires :comment
         requires :id_facebook
       end
-
       post ":type/vehicle/:code", rabl: "result.rabl" do
         i = Interaction.new
         i.user = User.find_by_id_facebook(params[:id_facebook])
@@ -416,71 +415,6 @@ module StarBus
         else
           @result.mensage = "Vehicle not found."
         end
-      end
-    end
-
-    # limite de interacitions por tela.
-    # LIMIT = 10
-    params do
-      requires :type, values: %w[con seg mov pon ace est]
-      requires :code
-    end
-    resource :interactions do
-      get ":type/stop/:code", rabl: "interactions.rabl" do
-        @type = Interaction.type_s[params[:type]]
-        stop = Stop.find_by_code(params[:code])
-        unless stop
-          error!({ erro: "Stop not found", detalhe: "Verify code param." }, 404)
-        end
-        @reputation = stop.reputation
-        @interactions = @reputation.interactions_type(@type)
-      end
-
-      get ":type/vehicle/:code", rabl: "interactions.rabl" do
-        code = params[:code]
-        @type = Interaction.type_s[params[:type]]
-        vehicle = Vehicle.find_by_code(code)
-        unless vehicle
-          error!({ erro: "Vehicle not found.", detalhe: "Verify code param." }, 404)
-        end
-        @reputation = vehicle.reputation
-        @interactions = @reputation.interactions_type(@type)
-      end
-
-      params do
-        requires :evaluation, values: Interaction.evaluations.values
-        requires :comment
-        requires :id_facebook
-      end
-      post ":type/stop/:code" do
-        i = Interaction.new
-        i.user = User.find_by_id_facebook(params[:id_facebook])
-        i.type_ = params[:type]
-        i.comment = params[:comment]
-        i.evaluation = params[:evaluation]
-        stop = Stop.find_by_code(params[:code])
-        stop.reputation ||= Reputation.new
-        stop.reputation.interactions << i
-        stop.save!
-      end
-
-      params do
-        requires :evaluation, values: Interaction.evaluations.values
-        requires :comment
-      end
-      post ":type/vehicle/:code" do
-        i = Interaction.new
-        i.user = User.find_by_id_facebook(params[:id_facebook])
-        i.type_ = params[:type]
-        i.comment = params[:comment]
-        i.evaluation = params[:evaluation]
-        vehicle = Vehicle.find_by_code(params[:code])
-        unless vehicle
-          error!({ erro: "Vehicle not found.", detalhe: "Verify code param." }, 404)
-        end
-        vehicle.reputation ||= Reputation.new
-        vehicle.reputation.interactions << i
-        vehicle.save!
       end
     end
 
