@@ -21,8 +21,11 @@ jobs:
           name: Bundle Install
           command: bundle
       - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
           name: Setup Tests
-          command: bundle exec db:setup
+          command: rake db:setup
       - run: 
           name: Run Tests
           command: rspec
