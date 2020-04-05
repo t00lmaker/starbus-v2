@@ -6,6 +6,9 @@ require "rack/test"
 require "airborne"
 require "webmock/rspec"
 require "coveralls"
+require 'webmock'
+
+WebMock.disable_net_connect!(allow_localhost: true)
 
 Coveralls.wear!
 
