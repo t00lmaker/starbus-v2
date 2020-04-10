@@ -44,4 +44,7 @@ rake db:setup RAILS_ENV=test
 Seeds banco de dados em test.
 rake db:seed RAILS_ENV=test
 
+Monitorar arquivos 
+bundle exec guard -d  
+
 
