@@ -37,6 +37,9 @@ group :development do
   gem "debase"
   gem "rubocop", require: false
   gem "ruby-debug-ide"
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-test'
 end
 
 group :test do
