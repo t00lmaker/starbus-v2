@@ -3,26 +3,31 @@
 require "singleton"
 require "lazy-strans-client"
 
-# Simples Singleton para garantir
-# que a validação do token está funcionando,
-# pois a api já faz o gerenciamento do Token.
+# StransApi wrapper
 class StransAPi
-  include Singleton
+  @@instance_ = nil
 
-  def initialize
-    @client = StransClient.new(ENV["STRANS_MAIL"],
-                               ENV["STRANS_PASS"],
-                               ENV["STRANS_KEY"])
+  def initialize(client)
+    @client = client
   end
 
-  # Chamdadas aos servicos padroes da API
+  # return instance if exists or new isntance with params default 
+  def self.instance
+    @@instance_ = StransAPi.new(StransClient.new(
+                                   ENV["STRANS_MAIL"],
+                                   ENV["STRANS_PASS"],
+                                   ENV["STRANS_KEY"])) unless @@instance_
+    @@instance_
+  end
+
+  # call api strans
   def get(path, search = nil)
     @client.get(path, search) rescue nil
   end
 
   RAIO_TERRA = 6378.137 # KM
 
-  # retorna todas as Stops próximas a as coordenadas passadas.
+  # return all Stops closes coods.
   def stops_proximas(long, lat, dist, sources = nil)
     stops = []
     sources ||= Stop.all
@@ -54,7 +59,7 @@ class StransAPi
 
   private
 
-  # Calcula da diferenca entre duas lats ou longs.
+  # Calc dist positions.
   def calc_distan(pos1, pos2)
     (pos1 - pos2) * Math::PI / 180
   end
