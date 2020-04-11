@@ -16,10 +16,9 @@
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
 guard 'rspec', cmd: "bundle exec rspec" do
-
   watch(%r{starbus-api.rb}) do |m|
-     "spec/integration"
-  end 
+    "spec/integration"
+  end
 
   # watch /lib/ files
   watch(%r{^lib/(.+).rb$}) do |m|

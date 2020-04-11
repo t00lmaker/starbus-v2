@@ -9,7 +9,6 @@ require_relative "../model/line"
 
 # Cache buses
 class BusCache
-  
   @@instance_ = nil
   # time to new request api
   LIMIT_TIME_UPDATE = 20.seconds
@@ -21,14 +20,16 @@ class BusCache
   def initialize(client)
     @client = client
   end
-  
-  # return instance if exists or new isntance with params default 
-  def self.instance 
+
+  # return instance if exists or new isntance with params default
+  def self.instance
     @@instance_ = BusCache.new(
-                    StransClient.new(
-                        ENV["email"],
-                        ENV["senha"], 
-                        ENV["key"])) unless @@instance_
+      StransClient.new(
+        ENV["email"],
+        ENV["senha"],
+        ENV["key"]
+      )
+    ) unless @@instance_
     @@instance_
   end
 
@@ -61,7 +62,7 @@ class BusCache
   end
 
   private
-  
+
   # return time to Brasilia
   def now
     Time.now.utc.localtime("-03:00")
@@ -79,8 +80,8 @@ class BusCache
   def valids(buses)
     buses&.select { |v| valid?(v.time) }
   end
-  
-  # update vehicles by api strans 
+
+  # update vehicles by api strans
   def update
     unless updated?
       reset if !@last_update || @last_update.day != now.day

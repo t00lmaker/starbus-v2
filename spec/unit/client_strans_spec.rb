@@ -1,5 +1,4 @@
 describe :client_strans do
-
   context :get do
     it "should be called StransApi with same param and search nil" do
       client = double(:client_strans)
@@ -30,14 +29,11 @@ describe :client_strans do
     end
   end
 
-  context :stops_proximas do 
-    
+  context :stops_proximas do
     xit "" do
-    
     end
 
     xit "" do
-
     end
   end
 end

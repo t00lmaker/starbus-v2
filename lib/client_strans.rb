@@ -11,12 +11,13 @@ class StransAPi
     @client = client
   end
 
-  # return instance if exists or new isntance with params default 
+  # return instance if exists or new isntance with params default
   def self.instance
     @@instance_ = StransAPi.new(StransClient.new(
-                                   ENV["STRANS_MAIL"],
-                                   ENV["STRANS_PASS"],
-                                   ENV["STRANS_KEY"])) unless @@instance_
+                                  ENV["STRANS_MAIL"],
+                                  ENV["STRANS_PASS"],
+                                  ENV["STRANS_KEY"]
+                                )) unless @@instance_
     @@instance_
   end
 

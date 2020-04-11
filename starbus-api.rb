@@ -187,7 +187,7 @@ module StarBus
       put ":id", rabl: "user.rabl" do
         @user = User.find(params[:id]) rescue nil
         if @user
-          @user.update(params)  
+          @user.update(params)
         else
           error!({ erro: "User not found", detalhe: "Check id in param." }, 404)
         end
@@ -203,7 +203,7 @@ module StarBus
           @user.update(active: false)
         else
           error!({ erro: "User not found", detalhe: "Check id in param." }, 404)
-        end    
+        end
       end
 
       desc "Create a user's sugestion to api"
