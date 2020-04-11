@@ -33,7 +33,7 @@ class StransAPi
     stops = []
     sources ||= Stop.all
     sources.each do |stop|
-      next unless !stop.long.nil? && !stop.long.nil?
+      next if stop.long.nil? || stop.lat.nil?
 
       dLong = calc_distan(long, stop.long)
       dLat = calc_distan(lat, stop.lat)
