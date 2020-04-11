@@ -250,7 +250,7 @@ module StarBus
 
       desc "Load all lines to source (API Integrah)."
       get "load" do
-        LoadLinesStops.new.init
+        LoadLinesStops.new(StarBus.instance).init
       end
 
       desc "Return vehicles by line."
@@ -415,62 +415,6 @@ module StarBus
         else
           @result.mensage = "Vehicle not found."
         end
-      end
-    end
-
-    RAIO_BUSCA_APP = 500
-
-    resource :stopsvehicles do
-      params do
-        requires :lat, type: Float
-        requires :long, type: Float
-        requires :code
-      end
-      get "line/:code", rabl: "stops_vehicles.rabl" do
-        @line = Line.find_by_code(params[:code])
-        if @line
-          lon = params[:long]
-          lat = params[:lat]
-          @stops = StransAPi.instance.stops_proximas(lon, lat, RAIO_BUSCA_APP, @line.stops)
-          if !@stops || @stops.empty?
-            @stops = StransAPi.instance.stops_proximas(lon, lat, (RAIO_BUSCA_APP * 2), @line.stops)
-          end
-          @vehicles = BusCache.instance.get_by_line(params[:code])
-          @vehicles&.each { |v| v.line = @line.code }
-          return
-        end
-        error!({ erro: "Line not found.", detalhe: "Verify code param." }, 404)
-      end
-
-      params do
-        requires :lat, type: Float
-        requires :long, type: Float
-        requires :codes, type: Array
-      end
-      get "line", rabl: "stops_vehicles0.rabl" do
-        lines = Line.where(code: params[:codes]).order("code ASC")
-        @vehicles = []
-        @stops = []
-        if lines && !lines.empty?
-          lines.each do |line|
-            lon = params[:long]
-            lat = params[:lat]
-            stops = StransAPi.instance.stops_proximas(lon, lat, RAIO_BUSCA_APP, line.stops)
-            if stops.empty?
-              stops = StransAPi.instance.stops_proximas(lon, lat, (RAIO_BUSCA_APP * 2), line.stops)
-            end
-            @stops.concat(stops)
-            vehicles = BusCache.instance.get_by_line(line.code)
-            if vehicles && !vehicles.empty?
-              vehicles.each { |v| v.line.code = line.code }
-              @vehicles.concat(vehicles)
-            end
-          end
-          @stops = Set.new(@stops)
-          @vehicles = Set.new(@vehicles)
-          return
-        end
-        error!({ erro: "Line nao encontrada", detalhe: "Verify code param." }, 404)
       end
     end
   end # class

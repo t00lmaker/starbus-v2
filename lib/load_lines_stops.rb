@@ -20,10 +20,13 @@ class LoadLinesStops
     "lat" => :lat,
     "long" => :long,
   }
+  
+  def initialize(client)
+    @stops = {}
+    @strans = client
+  end
 
   def init
-    @stops = {}
-    @strans = StransClient.new(ENV["STRANS_MAIL"], ENV["STRANS_PASS"], ENV["STRANS_KEY"])
     lines = @strans.get(:linhas)
     if lines.is_a?(ErroStrans)
       raise "Strans Api error '#{lines.to_json}'"
