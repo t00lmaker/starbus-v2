@@ -20,7 +20,7 @@ class LoadLinesStops
     "lat" => :lat,
     "long" => :long,
   }
-  
+
   def initialize(client)
     @stops = {}
     @strans = client
@@ -40,7 +40,7 @@ class LoadLinesStops
       has_line = Line.find_by_code(l.codigoLinha)
       next if has_line
 
-      line = transform_in_lines(l)
+      line = transform_in_line(l)
       stops = @strans.get(:paradas_linha, line.code)
       if stops.is_a?(ErroStrans)
         puts "Strans Api error '#{stops.to_json}'"
@@ -54,7 +54,7 @@ class LoadLinesStops
   end
 
   # Transforma um line do modelo Strans para uma line do modelo starbus.
-  def transform_in_lines(linha_strans)
+  def transform_in_line(linha_strans)
     line_hash = {}
     linha_strans.instance_variables.each do |var|
       attr_name = var.to_s.delete("@")

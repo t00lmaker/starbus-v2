@@ -23,14 +23,13 @@ describe :client_strans do
 
     it "should be return nil if StansApi raise Error" do
       client = double(:client_strans)
-      allow(client).to receive(:get).with(:not_exists, nil).and_return("Error")
+      allow(client).to receive(:get).with(:not_exists, nil).and_raise("Error")
       strans = StransAPi.new(client)
       expect(strans.get(:not_exists)).to be_nil
     end
   end
 
   context :stops_proximas do
-
     before(:all) do
       Stop.create(code: "1", description: "A", address: "A", lat: "-5.062577", long: "-42.795527")
       Stop.create(code: "2", description: "B", address: "B", lat: "-5.062454", long: "-42.793862")
@@ -40,23 +39,23 @@ describe :client_strans do
     after(:all) do
       truncate(Stop)
     end
-    
+
     it "should be not return all stops in to distance." do
       lat, long, dist = -5.062793.to_f, -42.795623.to_f, 500.to_f
       result = StransAPi.instance.stops_proximas(long, lat, dist)
-      expect(result.size).to eq(3) 
+      expect(result.size).to eq(3)
     end
 
     it "should be not return stops if not stops in raio." do
       lat, long, dist = -5.062793.to_f, -42.795623.to_f, 200.to_f
       result = StransAPi.instance.stops_proximas(long, lat, dist)
-      expect(result.size).to eq(2) 
+      expect(result.size).to eq(2)
     end
 
     it "should be not return stops if not stops in raio from coord." do
       lat, long, dist = -5.0.to_f, -42.0.to_f, 500.to_f
       result = StransAPi.instance.stops_proximas(long, lat, dist)
-      expect(result.size).to eq(0) 
+      expect(result.size).to eq(0)
     end
   end
 end
