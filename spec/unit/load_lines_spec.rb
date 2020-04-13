@@ -68,11 +68,11 @@ describe :load_lines do
     it "should be create stop from paradaStrans." do
       s = ParadaStrans.new(codigoParada: "1", denominacao: "t", endereco: "A", lat: "1", long: "2")
       new_stop = LoadLinesStops.new(nil).transform_in_stops([s]).first
-      expect(new_stop.code).to eq(stops.first.codigoParada)
-      expect(new_stop.description).to eq(stops.first.denominacao)
-      expect(new_stop.address).to eq(stops.first.endereco)
-      expect(new_stop.lat).to eq(stops.first.lat)
-      expect(new_stop.long).to eq(stops.first.long)
+      expect(new_stop.code).to eq(s.codigoParada)
+      expect(new_stop.description).to eq(s.denominacao)
+      expect(new_stop.address).to eq(s.endereco)
+      expect(new_stop.lat).to eq(s.lat)
+      expect(new_stop.long).to eq(s.long)
     end
   end
 end
