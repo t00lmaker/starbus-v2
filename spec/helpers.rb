@@ -11,8 +11,8 @@ def token_head(user = nil, app = nil)
   { "Authorization" => "Bearer #{JWT.encode(payload, nil, "none")}" }
 end
 
-def time_to(time=0)
-  (Time.now()+(time)).strftime("%k:%M")
+def time_to(time = 0)
+  (Time.now() + (time)).strftime("%k:%M")
 end
 
 def truncate(model)
