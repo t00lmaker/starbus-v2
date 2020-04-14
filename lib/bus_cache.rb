@@ -50,7 +50,7 @@ class BusCache
   # return all vehicles by line in cache
   def get_by_line(cod_line)
     update
-    vehicles = @client.get(:vehicles_line, cod_line)
+    vehicles = @client.get(:veiculos_linha, cod_line)
     load_in_map(vehicles)
     vehicles = @buses_by_line[cod_line]
     vehicles ? valids(vehicles.values) : nil
