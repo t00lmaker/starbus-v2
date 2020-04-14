@@ -23,4 +23,4 @@ app = Rack::Builder.new do
   run StarBus::API.new
 end.to_app
 
-Rack::Handler::WEBrick.run(app, Port: 9292)
+Rack::Handler::WEBrick.run(app, Port: ENV['PORT'] || 9292)
