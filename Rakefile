@@ -7,7 +7,6 @@ require_relative "starbus-api"
 require_relative "model/line"
 require_relative "model/stop"
 
-require "rspec/core/rake_task"
 task default: :spec
 RSpec::Core::RakeTask.new do |task|
   task.rspec_opts = ['--color', '--format', 'doc']
