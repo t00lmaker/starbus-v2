@@ -23,7 +23,7 @@ describe :vehicles do
       expect { Vehicle.find_by_code!("666") }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    #it "should be reutrn all vehicles on-line" do
+    xit "should be reutrn all vehicles on-line" do
       get "/v2/vehicles/", token_head
       expect_status(200)
       expect_json_types(vehicles: :array_of_objects)
