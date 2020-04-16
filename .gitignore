@@ -17,4 +17,4 @@ vendor/bundle
 /.yardoc
 .byebug_history
 .vscode
-coverage
+coveragecoverage

@@ -49,4 +49,6 @@ group :test do
   gem "webmock"
   # teste para web apis https://github.com/brooklynDev/airborne
   gem "airborne"
+  # report coverage
+  gem 'simplecov'
 end

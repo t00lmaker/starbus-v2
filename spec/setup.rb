@@ -7,12 +7,14 @@ require "airborne"
 require "webmock/rspec"
 require "coveralls"
 require 'webmock'
+require 'simplecov'
+
+Coveralls.wear!
+#SimpleCov.start
+
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
-Coveralls.wear!
-
-# env default para rspec = test
 ENV["RAILS_ENV"] ||= "test"
 
 Dir.glob(File.join(File.join(File.dirname(__FILE__), ".."), "starbus-api.rb")).sort.each do |file|

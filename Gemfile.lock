@@ -232,6 +232,7 @@ DEPENDENCIES
   rspec
   rubocop
   ruby-debug-ide
+  simplecov
   strans-client
   timerizer
   webmock
