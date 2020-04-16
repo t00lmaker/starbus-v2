@@ -1,6 +1,6 @@
 # StarBus API - 0.0.1
 [![Build Status](https://travis-ci.org/t00lmaker/starbus-v2.svg?branch=master)](https://travis-ci.org/t00lmaker/starbus-v2)
-[![Coverage Status](https://coveralls.io/repos/github/t00lmaker/starbus-v2/badge.svg?branch=travisci)](https://coveralls.io/github/t00lmaker/starbus-v2?branch=travisci)
+[![Coverage Status](https://coveralls.io/repos/github/t00lmaker/starbus-v2/badge.svg?branch=master)](https://coveralls.io/github/t00lmaker/starbus-v2?branch=master)
 
 Uma plataforma de crowdsourcing para usuário de transporte público de Teresina.
 
