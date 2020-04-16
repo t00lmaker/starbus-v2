@@ -2,13 +2,20 @@ addons:
   postgresql: 9.6
 language: ruby
 before_install:
-  - gem install bundler
+- gem install bundler
 dist: trusty
 rvm:
-  - 2.5
-  - 2.6
+- 2.5
+- 2.6
 script:
-  - bundle install --jobs=3 --retry=3 --deployment
-  - bundle exec rake db:setup RAILS_ENV=test
-  - bundle exec rspec
-  - bundle exec rubocop -a -x
+- bundle install --jobs=3 --retry=3 --deployment
+- bundle exec rake db:setup RAILS_ENV=test
+- bundle exec rspec
+- bundle exec rubocop -a -x
+deploy:
+  provider: heroku
+  api_key:
+    secure: ypmISo5VkILgchzlYxyS8QVZL42jhT15e2i2RA22uIzobmzTFNlbU5ZCdTJ5KxUSiZxmxc9oonswIHkB49yVTGT53qTlQXzGZYv3W/UphqSMdlrOocmIlpL/+DMx7bHx9HmZ+WGepolahJTf//VktjeqMrXmWhIwbkha+8mZmizqqaaFM18qJwAxIUcuB9a1AVmw+0dEX1RoEjJdqQwQ629fZBBSRbsmXVJZleastqlVT8F1a1naNqzMIurHDMB3/2zlh0zgMZJxzKVcpAf4DzQtqrjTTFWjP7VzMq+lHHffH46xW85tQwGndk8VoAzJYjOhLaljTG6L2VjHeAx30+91Fe1CLOjHN03b1/aJ0Y6HXZRkto5qfxUJEGbuVT7CRY2aNJfGjxZDy68BJTIvfSRfkwub57i0JFjSAmneYKYnC/aVntc9kuZ40rqX6S+d3Ekg2/a5Po5SlwRFBY4QPW5xLyNhkCW3ztM3vEkswz/WjOqPtw6N0onfNBa6TnDdKOtNQLrxAxsXIHa7kYxW7S8bRgFbE9UeutN+W0Rm/4oqTZaee7OI3ydbGeDJKtyl4wO3MYr98gPyFsxXy21SPCUVHovSYj1IH4vmrVT22QSMvyOhgkIDk1FFCtrM7s37qgTQav13ifpEXBO8MP7i71knEj+e6m/6J/iC/JOV1IY=
+  app: starbus-v2
+  on:
+    repo: t00lmaker/starbus-v2
