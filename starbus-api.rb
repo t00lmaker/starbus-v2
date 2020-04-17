@@ -250,7 +250,7 @@ module StarBus
 
       desc "Load all lines to source (API Integrah)."
       get "load" do
-        LoadLinesStops.new(StarBus.instance).init
+        LoadLinesStops.new(StransAPi.instance).init
       end
 
       desc "Return vehicles by line."
