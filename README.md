@@ -1,6 +1,7 @@
 # StarBus API - 0.0.1
 [![Build Status](https://travis-ci.org/t00lmaker/starbus-v2.svg?branch=master)](https://travis-ci.org/t00lmaker/starbus-v2)
 [![Coverage Status](https://coveralls.io/repos/github/t00lmaker/starbus-v2/badge.svg?branch=master)](https://coveralls.io/github/t00lmaker/starbus-v2?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
 
 Uma plataforma de crowdsourcing para usuário de transporte público de Teresina. Aqui podem ser centralizadas as informações sobre o 
 transporte público da capital. Desenvolvedores de aplicativo podem utilizar nossa plataforma como fonte de dados e podem compartilhar
