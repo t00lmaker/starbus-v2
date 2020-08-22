@@ -7,7 +7,17 @@ require_relative "starbus-api"
 require_relative "model/line"
 require_relative "model/stop"
 
+require 'rspec/core/rake_task'
+require 'coveralls/rake/task'
+
+Coveralls::RakeTask.new
+task :test_with_coveralls => [:spec, :features, 'coveralls:push']
+
+RSpec::Core::RakeTask.new(:spec)
+
 load "tasks/otr-activerecord.rake"
+
+task :default => :spec
 
 namespace :db do
   task :environment do
