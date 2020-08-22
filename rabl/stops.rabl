@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 collection @stops, root: :stops, object_root: false
-attributes :code, :description, :address, :lat, :long, :dist
+attributes :code, :description, :address, :lat, :lng, :dist
 child :reputation do |ele|
   node(:state) { ele.media('ESTADO') }
   node(:safety) { ele.media('SEGURANCA') }
