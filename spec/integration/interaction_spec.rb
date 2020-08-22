@@ -1,6 +1,6 @@
 describe :interactions do
   before(:all) do
-    Stop.create(code: "1", description: "A", address: "A", lat: "-5.062577", long: "-42.795527")
+    Stop.create(code: "1", description: "A", address: "A", lat: "-5.062577", lng: "-42.795527")
     Vehicle.create(code: "1")
   end
 

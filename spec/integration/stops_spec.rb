@@ -2,9 +2,9 @@
 
 describe :stops do
   before(:all) do
-    a = Stop.create(code: "1", description: "A", address: "A", lat: "-5.062577", long: "-42.795527")
-    b = Stop.create(code: "2", description: "B", address: "B", lat: "-5.062454", long: "-42.793862")
-    c = Stop.create(code: "3", description: "C", address: "C", lat: "-5.05895", long: "-42.795047")
+    a = Stop.create(code: "1", description: "A", address: "A", lat: "-5.062577", lng: "-42.795527")
+    b = Stop.create(code: "2", description: "B", address: "B", lat: "-5.062454", lng: "-42.793862")
+    c = Stop.create(code: "3", description: "C", address: "C", lat: "-5.05895", lng: "-42.795047")
     Line.create(code: "5", description: "RED", return: "PC BANDEIRA", origin: "RED", stops: [a])
     Line.create(code: "6", description: "ROD", return: "UNIV", origin: "ROD", stops: [b, c])
     Line.create(code: "7", description: "ALTO", return: "MUCAM", origin: "ALTO", stops: [a])
@@ -58,23 +58,23 @@ describe :stops do
     end
   end
 
-  context "GET /closest" do
-    it "should be return stops closet coordinate with dist" do
-      get "/v2/stops/closest?lat=-5.062793&long=-42.795623&dist=500", token_head
+  context "GET /closes" do
+    it "should be return stops closes coordinate with dist" do
+      get "/v2/stops/closes?lat=-5.062793&lng=-42.795623&dist=500", token_head
       expect_status(200)
       expect_json_types(stops: :array_of_objects)
       expect_json_sizes(stops: 3)
     end
 
     it "should be not return stops out dist" do
-      get "/v2/stops/closest?lat=-5.062793&long=-42.795623&dist=200", token_head
+      get "/v2/stops/closes?lat=-5.062793&lng=-42.795623&dist=200", token_head
       expect_status(200)
       expect_json_types(stops: :array_of_objects)
       expect_json_sizes(stops: 2)
     end
 
     it "should be not return stops out dist coordinates" do
-      get "/v2/stops/closest?lat=-5.0&long=-41.0&dist=200", token_head
+      get "/v2/stops/closes?lat=-5.0&lng=-41.0&dist=200", token_head
       expect_status(200)
       expect_json_types(stops: :array_of_objects)
       expect_json_sizes(stops: 0)
