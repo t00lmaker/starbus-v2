@@ -29,14 +29,14 @@ class StransAPi
   RAIO_TERRA = 6378.137 # KM
 
   # return all Stops closes coods.
-  def stops_proximas(long, lat, dist, sources = nil)
+  def nearby_stops(lng, lat, dist, sources = nil)
     stops = []
     sources ||= Stop.all
     sources.each do |stop|
-      next if stop.long.nil? || stop.lat.nil?
+      next if stop.lng.nil? || stop.lat.nil?
 
-      dLong = calc_distan(long, stop.long)
-      dLat = calc_distan(lat, stop.lat)
+      dLong = calc_dist(lng, stop.lng)
+      dLat = calc_dist(lat, stop.lat)
 
       # mutiplicacao do sen da metade da distancia da Lat;
       msmdl = Math.sin(dLat / 2) * Math.sin(dLat / 2)
@@ -61,7 +61,7 @@ class StransAPi
   private
 
   # Calc dist positions.
-  def calc_distan(pos1, pos2)
+  def calc_dist(pos1, pos2)
     (pos1 - pos2) * Math::PI / 180
   end
 end

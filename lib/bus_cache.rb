@@ -24,11 +24,7 @@ class BusCache
   # return instance if exists or new isntance with params default
   def self.instance
     @@instance_ = BusCache.new(
-      StransClient.new(
-        ENV["email"],
-        ENV["senha"],
-        ENV["key"]
-      )
+      StransAPi.instance
     ) unless @@instance_
     @@instance_
   end

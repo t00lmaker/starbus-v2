@@ -18,7 +18,7 @@ class LoadLinesStops
     "denominacao" => :description,
     "endereco" => :address,
     "lat" => :lat,
-    "long" => :long,
+    "long" => :lng,
   }
 
   def initialize(client)
