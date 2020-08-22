@@ -34,11 +34,10 @@ module StarBus
 
     helpers do
       def load_auth
-        token = headers['Authorization'].dup
-        return false if token.nil?
-
-        token.slice!("Bearer ")
-        payload = JWT.decode(token, nil, false)[0]
+        @token = headers['Authorization'].dup
+        return false if @token.nil?
+        @token.slice!("Bearer ")
+        payload = JWT.decode(@token, nil, false)[0]
         @current_user ||= User.find(payload["user_id"])
         @app_user ||= Application.find(payload["app_id"])
         @current_user && @app_user && in_user_app?(@app_user)
@@ -68,7 +67,7 @@ module StarBus
       requires :username, desc: "username/email para login."
       requires :password, desc: "password para login."
     end
-    post "login" do
+    post "login", rabl: "login.rabl"  do
       @app = Application.find_by_key(params[:application])
       @user = User.find_by_username(params[:username])
       if @user && @user.password == params[:password]
@@ -77,12 +76,18 @@ module StarBus
           app_id: @app.id,
           exp: Time.now.to_i + 15 * 3600,
         }
-        jwt = JWT.encode(payload, nil, "none")
-        Token.create(jwt: jwt, application: @app)
-        { token: jwt }
+        @jwt = JWT.encode(payload, nil, "none")
+        Token.create(jwt: @jwt, application: @app)
       else
         error!({ erro: "Falha de autenticação.", detalhe: "Verifique os dados passados" }, 403)
       end
+    end
+    
+    desc "Return session by token" 
+    get "session", rabl: "login.rabl" do
+      @app = @app_user
+      @user = @current_user
+      @jwt = @token
     end
 
     resource :applications do
@@ -267,11 +272,11 @@ module StarBus
       params do
         optional :codes, type: Array, desc: "Stop codes to return."
       end
-      get "/", rabl: "stops.rabl" do
+      get "/", rabl: "stops_basic.rabl" do
         if params[:codes]
           @stops = Stop.where(code: params[:codes]).order("code asc")
         else
-          @stops = Stop.includes(:lines).order("code asc")
+          @stops = Stop.order("code asc")
         end
       end
 
@@ -291,14 +296,14 @@ module StarBus
       desc "Return stops closes to localization."
       params do
         requires :lat, type: Float
-        requires :long, type: Float
+        requires :lng, type: Float
         requires :dist, type: Float
       end
-      get "closest", rabl: "stops.rabl" do
+      get "closes", rabl: "stops.rabl" do
         strans = StransAPi.instance
-        @stops = strans.stops_proximas(params[:long], params[:lat], params[:dist])
+        @stops = strans.nearby_stops(params[:lng], params[:lat], params[:dist])
         if !@stops || @stops.empty?
-          @stops = strans.stops_proximas(params[:long], params[:lat], (params[:dist] * 2))
+          @stops = strans.nearby_stops(params[:lng], params[:lat], (params[:dist] * 2))
         end
       end
 
