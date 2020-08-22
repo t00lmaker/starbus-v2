@@ -17,7 +17,7 @@ class Reputation < ActiveRecord::Base
     ints ? ints.size : 0
   end
 
-  def media(type)
+  def avg(type)
     total = 0
     avg = 0
     ints = interactions_type(type)
