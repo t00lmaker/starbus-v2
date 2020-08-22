@@ -10,8 +10,10 @@ require 'webmock'
 require 'simplecov'
 
 Coveralls.wear!
-#SimpleCov.start
 
+# local coverage report
+SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+SimpleCov.start
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
@@ -35,6 +37,6 @@ end
 # init active-record
 OTR::ActiveRecord.configure_from_file! "config/database.yml"
 
-# load "db/seeds.rb"
+# rload "db/seeds.rb"
 
 require "helpers"
