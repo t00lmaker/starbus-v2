@@ -13,7 +13,7 @@ describe :bus_cache do
     truncate(Vehicle)
   end
 
-  xit "should be return all vehicles validse and save new Vehicle" do
+  it "should be return all vehicles validse and save new Vehicle" do
     client = double(:client_strans)
     expect(client).to receive(:get).with(:veiculos).and_return(@buses)
     cache = BusCache.new(client)
@@ -22,7 +22,7 @@ describe :bus_cache do
     expect(vehicles.first.code).to eq(@buses[1].codigoVeiculo)
   end
 
-  xit "should be save vehicles valids" do
+  it "should be save vehicles valids" do
     client = double(:client_strans)
     expect(client).to receive(:get).with(:veiculos).and_return(@buses)
     cache = BusCache.new(client)
@@ -30,14 +30,14 @@ describe :bus_cache do
     expect(Vehicle.find_by_code(@buses[1].codigoVeiculo)).not_to be_nil
   end
 
-  xit "should be return vehicle by code" do
+  it "should be return vehicle by code" do
     client = double(:client_strans)
     expect(client).to receive(:get).with(:veiculos).and_return(@buses)
     cache = BusCache.new(client)
     expect(cache.get("2")).not_to be_nil
   end
 
-  xit "should be return vehicles by line" do
+  it "should be return vehicles by line" do
     client = double(:client_strans)
     expect(client).to receive(:get).with(:veiculos_linha, nil).and_return(@buses)
     expect(client).to receive(:get).with(:veiculos).and_return(@buses)
