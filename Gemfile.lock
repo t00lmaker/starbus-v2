@@ -142,6 +142,8 @@ GEM
     rack (2.2.2)
     rack-accept (0.4.5)
       rack (>= 0.4)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rainbow (3.0.0)
@@ -228,6 +230,7 @@ DEPENDENCIES
   jwt
   otr-activerecord
   pg
+  rack-cors
   rake
   rspec
   rubocop

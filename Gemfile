@@ -32,6 +32,9 @@ gem "rake"
 # Auth with jwt
 gem "jwt"
 
+# cors app
+gem "rack-cors"
+
 group :development do
   gem "coveralls", require: false
   gem "debase"
