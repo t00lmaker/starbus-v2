@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "active_record"
+require 'active_record'
 
 class Line < ActiveRecord::Base
   has_and_belongs_to_many :stops

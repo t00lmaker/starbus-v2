@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "active_record"
+require 'active_record'
 
 class Reputation < ActiveRecord::Base
   has_many :interactions

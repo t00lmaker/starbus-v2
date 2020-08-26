@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
@@ -15,9 +17,9 @@
 #
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
-guard 'rspec', cmd: "bundle exec rspec" do
-  watch(%r{starbus-api.rb}) do |m|
-    "spec/integration"
+guard 'rspec', cmd: 'bundle exec rspec' do
+  watch(/starbus-api.rb/) do |_m|
+    'spec/integration'
   end
 
   # watch /lib/ files
@@ -26,7 +28,7 @@ guard 'rspec', cmd: "bundle exec rspec" do
   end
 
   # watch /spec/ files
-  watch(%r{^spec/(.+).rb$}) do |m|
-    "spec/"
+  watch(%r{^spec/(.+).rb$}) do |_m|
+    'spec/'
   end
 end

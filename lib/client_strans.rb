@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "singleton"
-require "lazy-strans-client"
+require 'singleton'
+require 'lazy-strans-client'
 
 # StransApi wrapper
 class StransAPi
@@ -13,17 +13,19 @@ class StransAPi
 
   # return instance if exists or new isntance with params default
   def self.instance
-    @@instance_ = StransAPi.new(StransClient.new(
-                                  ENV["STRANS_MAIL"],
-                                  ENV["STRANS_PASS"],
-                                  ENV["STRANS_KEY"]
-                                )) unless @@instance_
+    @@instance_ ||= StransAPi.new(StransClient.new(
+                                    ENV['STRANS_MAIL'],
+                                    ENV['STRANS_PASS'],
+                                    ENV['STRANS_KEY']
+                                  ))
     @@instance_
   end
 
   # call api strans
   def get(path, search = nil)
-    @client.get(path, search) rescue nil
+    @client.get(path, search)
+  rescue StandardError
+    nil
   end
 
   RAIO_TERRA = 6378.137 # KM

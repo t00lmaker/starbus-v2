@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "singleton"
-require "lazy-strans-client"
-require "timerizer"
-require_relative "../model/vehicle"
-require_relative "../model/snapshot"
-require_relative "../model/line"
+require 'singleton'
+require 'lazy-strans-client'
+require 'timerizer'
+require_relative '../model/vehicle'
+require_relative '../model/snapshot'
+require_relative '../model/line'
 
 # Cache buses
 class BusCache
@@ -23,9 +23,9 @@ class BusCache
 
   # return instance if exists or new isntance with params default
   def self.instance
-    @@instance_ = BusCache.new(
+    @@instance_ ||= BusCache.new(
       StransAPi.instance
-    ) unless @@instance_
+    )
     @@instance_
   end
 
@@ -61,12 +61,12 @@ class BusCache
 
   # return time to Brasilia
   def now
-    Time.now.utc.localtime("-03:00")
+    Time.now.utc.localtime('-03:00')
   end
 
   # check valid time to bus
   def valid?(time)
-    time_as_array = time.split(":")
+    time_as_array = time.split(':')
     hash_h = { hour: time_as_array[0].to_i, min: time_as_array[1].to_i }
     time_veic = now.change(hash_h)
     time_veic >= LIMIT_TIME_VEI.ago && time_veic <= LIMIT_TIME_VEI.from_now

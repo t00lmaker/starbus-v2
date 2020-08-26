@@ -6,13 +6,13 @@ def token_head(user = nil, app = nil)
   app ||= Application.first
   payload = {
     user_id: user.id,
-    app_id: app.id,
+    app_id: app.id
   }
-  { "Authorization" => "Bearer #{JWT.encode(payload, nil, "none")}" }
+  { 'Authorization' => "Bearer #{JWT.encode(payload, nil, 'none')}" }
 end
 
 def time_to(time = 0)
-  (Time.now() + (time)).strftime("%k:%M")
+  (Time.now + time).strftime('%k:%M')
 end
 
 def truncate(model)
@@ -24,12 +24,12 @@ def truncate_table(table)
 end
 
 def strans_login_stub
-  stub_request(:post, "https://api.inthegra.strans.teresina.pi.gov.br/v1/signin")
+  stub_request(:post, 'https://api.inthegra.strans.teresina.pi.gov.br/v1/signin')
     .to_return(body: '{"token": "87d19cf0-59f1-434b-9250-54b35902154c", "minutes": 10}')
 end
 
 def strans_vehicles_stub
-  stub_request(:get, "https://api.inthegra.strans.teresina.pi.gov.br/v1/veiculos")
+  stub_request(:get, 'https://api.inthegra.strans.teresina.pi.gov.br/v1/veiculos')
     .to_return(body: '[{
       "Linha": {
           "CodigoLinha": "0618",
@@ -41,13 +41,13 @@ def strans_vehicles_stub
             "CodigoVeiculo": 101,
             "Lat": "-5.14842000",
             "Long": "-42.79380000",
-            "Hora": "' + Time.now.hour.to_s + ":" + Time.now.min.to_s + '"
+            "Hora": "' + Time.now.hour.to_s + ':' + Time.now.min.to_s + '"
           },
           {
             "CodigoVeiculo": 102,
             "Lat": "-5.08364000",
             "Long": "-42.78894000",
-            "Hora": "' + Time.now.hour.to_s + ":" + Time.now.min.to_s + '"
+            "Hora": "' + Time.now.hour.to_s + ':' + Time.now.min.to_s + '"
           },
           {
             "CodigoVeiculo": 666,

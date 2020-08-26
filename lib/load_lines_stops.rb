@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-require "strans-client"
-require "./model/line"
-require "./model/stop"
+require 'strans-client'
+require './model/line'
+require './model/stop'
 
 class LoadLinesStops
   @@line_attrs = {
-    "codigoLinha" => :code,
-    "denominacao" => :description,
-    "origem" => :origin,
-    "circular" => :circular,
-    "retorno" => :return,
+    'codigoLinha' => :code,
+    'denominacao' => :description,
+    'origem' => :origin,
+    'circular' => :circular,
+    'retorno' => :return
   }
 
   @@stops_attrs = {
-    "codigoParada" => :code,
-    "denominacao" => :description,
-    "endereco" => :address,
-    "lat" => :lat,
-    "long" => :lng,
+    'codigoParada' => :code,
+    'denominacao' => :description,
+    'endereco' => :address,
+    'lat' => :lat,
+    'long' => :lng
   }
 
   def initialize(client)
@@ -57,14 +57,12 @@ class LoadLinesStops
   def transform_in_line(linha_strans)
     line_hash = {}
     linha_strans.instance_variables.each do |var|
-      attr_name = var.to_s.delete("@")
+      attr_name = var.to_s.delete('@')
       attr_name = @@line_attrs[attr_name]
-      if attr_name
-        line_hash[attr_name] = linha_strans.instance_variable_get(var)
-      end
+      line_hash[attr_name] = linha_strans.instance_variable_get(var) if attr_name
     end
-    line_hash = line_hash.except("veiculos")
-    line_hash = line_hash.except("paradas")
+    line_hash = line_hash.except('veiculos')
+    line_hash = line_hash.except('paradas')
     Line.new(line_hash)
   end
 
@@ -73,7 +71,7 @@ class LoadLinesStops
     stops = []
     parada_strans.each do |p|
       p.instance_variables.each do |var|
-        attr_name = var.to_s.delete("@")
+        attr_name = var.to_s.delete('@')
         attr_name = @@stops_attrs[attr_name]
         stop_hash[attr_name] = p.instance_variable_get(var) if attr_name
       end

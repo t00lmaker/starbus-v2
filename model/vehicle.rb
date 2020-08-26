@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "active_record"
-require_relative "line"
+require 'active_record'
+require_relative 'line'
 
 class Vehicle < ActiveRecord::Base
   has_one :reputation

@@ -6,8 +6,8 @@ class CreateStops < ActiveRecord::Migration[6.0]
       t.string :code
       t.string :description
       t.text :address
-      t.decimal :lat, :precision => 10, :scale => 6, :default => 0.0
-      t.decimal :lng, :precision => 10, :scale => 6, :default => 0.0
+      t.decimal :lat, precision: 10, scale: 6, default: 0.0
+      t.decimal :lng, precision: 10, scale: 6, default: 0.0
       t.timestamps null: false
     end
   end
