@@ -14,7 +14,7 @@ root = User.create(name: 'root',
                    password_hash: hash_pass,
                    email: 'luanpontes2@gmail.com')
 
-# Cria a aplicação root, para manipulação de usuarios e aplicações na plataforma
+# Cria a aplicacao root, para manipulacao de usuarios e aplicacoes na plataforma
 Application.create(name: 'Starbus',
                    key: 'starbus',
                    ownner: root,

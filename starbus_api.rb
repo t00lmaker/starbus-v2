@@ -23,6 +23,7 @@ require './lib/bus_cache'
 I18n.config.available_locales = :en
 
 module StarBus
+  # Api Starbus
   class API < Grape::API
     version 'v2'
     format :json
@@ -54,9 +55,10 @@ module StarBus
 
       def validate_app!(app)
         error!({ erro: 'Application not found', detalhe: 'Check id param' }, 404) unless app
-        unless in_user_app?(app)
-          error!({ erro: 'Access Error', detalhe: 'You do not have access' }, 401)
-        end
+
+        return if in_user_app?(app)
+
+        error!({ erro: 'Access Error', detalhe: 'You do not have access' }, 401)
       end
     end
 
@@ -78,7 +80,7 @@ module StarBus
         @jwt = JWT.encode(payload, nil, 'none')
         Token.create(jwt: @jwt, application: @app)
       else
-        error!({ erro: 'Falha de autenticação.', detalhe: 'Verifique os dados passados' }, 403)
+        error!({ erro: 'Falha de autenticacão.', detalhe: 'Verifique os dados passados' }, 403)
       end
     end
 
@@ -286,7 +288,7 @@ module StarBus
       get ':code/vehicles', rabl: 'vehicles.rabl' do
         @vehicles = BusCache.instance.get_by_line(params[:code])
       end
-    end # resource :line
+    end
 
     resource :stops do
       desc 'Return all stops filter by codes'

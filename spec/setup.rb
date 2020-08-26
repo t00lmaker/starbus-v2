@@ -19,7 +19,7 @@ WebMock.disable_net_connect!(allow_localhost: true)
 
 ENV['RAILS_ENV'] ||= 'test'
 
-Dir.glob(File.join(File.join(File.dirname(__FILE__), '..'), 'starbus-api.rb')).sort.each do |file|
+Dir.glob(File.join(File.join(File.dirname(__FILE__), '..'), '*_api.rb')).sort.each do |file|
   require file
 end
 

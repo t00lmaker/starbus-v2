@@ -3,13 +3,13 @@
 [![Coverage Status](https://coveralls.io/repos/github/t00lmaker/starbus-v2/badge.svg?branch=master)](https://coveralls.io/github/t00lmaker/starbus-v2?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
 
-Uma plataforma de crowdsourcing para usuário de transporte público de Teresina. Aqui podem ser centralizadas as informações sobre o 
+Uma plataforma de crowdsourcing para usuário de transporte público de Teresina. Aqui podem ser centralizadas as informacoes sobre o 
 transporte público da capital. Desenvolvedores de aplicativo podem utilizar nossa plataforma como fonte de dados e podem compartilhar
 a visão de seus usuário sobre o transporte público da capital. 
 
 ### API
 
-Veja a documentação da nossa API [aqui](https://documenter.getpostman.com/view/593922/Szf52UVe). 
+Veja a documentacão da nossa API [aqui](https://documenter.getpostman.com/view/593922/Szf52UVe). 
 
 #### Apps
   Aplicativos iOs e Android em que usuários utilizar em seus smartphones em que
@@ -17,12 +17,12 @@ Veja a documentação da nossa API [aqui](https://documenter.getpostman.com/view
   de transport público local.  
 
 #### Dashboard
-  Dados públicos sobre o transporte público local construidos pela utilização da
-  dos app, que são mostrados de forma a gerar informação relevante para a sociedade.
+  Dados públicos sobre o transporte público local construidos pela utilizacão da
+  dos app, que são mostrados de forma a gerar informacão relevante para a sociedade.
 
 #### API
-  Core do Starbus que deve pode ser acessada via App, Dashboard e por outras aplições de
-  outros produtores de software. Oferece as informações que alimentam a plataforma.  
+  Core do Starbus que deve pode ser acessada via App, Dashboard e por outras aplicoes de
+  outros produtores de software. Oferece as informacoes que alimentam a plataforma.  
 
 Esse repositorio guarda a api e a landpage do projeto.
 

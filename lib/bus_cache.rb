@@ -72,7 +72,6 @@ class BusCache
     time_veic >= LIMIT_TIME_VEI.ago && time_veic <= LIMIT_TIME_VEI.from_now
   end
 
-  # return valids vehicles
   def valids(buses)
     buses&.select { |v| valid?(v.time) }
   end
@@ -88,23 +87,20 @@ class BusCache
     save_snapshot
   end
 
-  def load_in_map(vehicles_strans)
-    vehicles_update = []
-    if vehicles_strans && !vehicles_strans.is_a?(ErroStrans)
-      vehicles_strans.each do |vehicle_strans|
-        next unless valid?(vehicle_strans.hora)
+  def load_in_map(vehicles)
+    return if vehicles.nil? || vehicles.is_a?(ErroStrans)
 
-        vehicle = load_or_save(vehicle_strans)
-        vehicles_update << vehicle
-        @buses_by_code[vehicle.code] = vehicle
-        @buses_by_line[vehicle.line.code] ||= {}
-        @buses_by_line[vehicle.line.code][vehicle.code] = vehicle
-      end
+    vehicles.select { |v| valid?(v.hora) }.each do |vehicle|
+      put_maps(load_or_save(vehicle))
     end
-    vehicles_update
   end
 
-  # load by data base or save new vehicle if not exists in db.
+  def put_maps(vehicle)
+    @buses_by_code[vehicle.code] = vehicle
+    @buses_by_line[vehicle.line.code] ||= {}
+    @buses_by_line[vehicle.line.code][vehicle.code] = vehicle
+  end
+
   def load_or_save(vehicle_strans)
     code = vehicle_strans.codigoVeiculo
     vehicle = Vehicle.find_by_code(code)
@@ -114,17 +110,16 @@ class BusCache
     vehicle
   end
 
-  # return last position vehicle.
   def load_last_position(vehicle)
     last_vehicle = @buses_by_code[vehicle.code]
-    if last_vehicle
-      if last_vehicle.lat == vehicle.lat && last_vehicle.long == vehicle.long
-        vehicle.last_lat = last_vehicle.last_lat
-        vehicle.last_long = last_vehicle.last_long
-      else
-        vehicle.last_lat = last_vehicle.lat
-        vehicle.last_long = last_vehicle.long
-      end
+    return unless last_vehicle
+
+    if last_vehicle.lat == vehicle.lat && last_vehicle.long == vehicle.long
+      vehicle.last_lat = last_vehicle.last_lat
+      vehicle.last_long = last_vehicle.last_long
+    else
+      vehicle.last_lat = last_vehicle.lat
+      vehicle.last_long = last_vehicle.long
     end
   end
 
@@ -135,13 +130,13 @@ class BusCache
   end
 
   def save_snapshot
-    unless @last_save && @last_save > LIMIT_TIME_SAVE.ago
-      lines_buses = {}
-      @buses_by_line.each do |k, v|
-        lines_buses[k] = v.values
-      end
-      Snapshot.create({ value: lines_buses.to_json, data: Time.now - 3.hours })
-      @last_save = now
+    return if @last_save && @last_save > LIMIT_TIME_SAVE.ago
+
+    lines_buses = {}
+    @buses_by_line.each do |k, v|
+      lines_buses[k] = v.values
     end
+    Snapshot.create({ value: lines_buses.to_json, data: Time.now - 3.hours })
+    @last_save = now
   end
 end

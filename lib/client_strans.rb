@@ -35,32 +35,34 @@ class StransAPi
     stops = []
     sources ||= Stop.all
     sources.each do |stop|
-      next if stop.lng.nil? || stop.lat.nil?
-
-      dLong = calc_dist(lng, stop.lng)
-      dLat = calc_dist(lat, stop.lat)
-
-      # mutiplicacao do sen da metade da distancia da Lat;
-      msmdl = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-      # mutiplicaçao cos da Latitude * PI
-      mclPI = Math.cos(lat * Math::PI / 180) * Math.cos(stop.lat * Math::PI / 180)
-      # mutiplicacao da metade do seno
-      mmds = Math.sin(dLong / 2) * Math.sin(dLong / 2)
-      a = msmdl + mclPI * mmds
-
-      c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-      d = RAIO_TERRA * c
-      dist_stop = d * 1000 # distancia em metros
-
-      if dist_stop < dist
-        stop.dist = dist_stop # metros
-        stops << stop
-      end
+      stops << stop if check_stop(stop, lng, lat, dist)
     end
     stops.sort! { |a, b| a.dist <=> b.dist }
   end
 
   private
+
+  def check_stop(stop, lng, lat, dist)
+    return false if stop.lng.nil? || stop.lat.nil?
+
+    a = calc_area(stop, lng, lat)
+    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    d = RAIO_TERRA * c
+    dist_stop = d * 1000
+    dist_stop < dist
+  end
+
+  def calc_area(stop, lng, lat)
+    d_long = calc_dist(lng, stop.lng)
+    d_lat  = calc_dist(lat, stop.lat)
+    # mutiplicacao do sen da metade da distancia da Lat;
+    msmdl = Math.sin(d_lat / 2) * Math.sin(d_lat / 2)
+    # mutiplicacao cos da Latitude * PI
+    mcl_pi = Math.cos(lat * Math::PI / 180) * Math.cos(stop.lat * Math::PI / 180)
+    # mutiplicacao da metade do seno
+    mmds = Math.sin(d_long / 2) * Math.sin(d_long / 2)
+    msmdl + mcl_pi * mmds
+  end
 
   # Calc dist positions.
   def calc_dist(pos1, pos2)

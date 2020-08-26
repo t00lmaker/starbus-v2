@@ -10,13 +10,13 @@ class Vehicle < ActiveRecord::Base
 
   # faz o merge entre dois vehicles.
   def merge(vehicle_strans)
-    if vehicle_strans
-      @code = vehicle_strans.codigoVeiculo
-      @time = vehicle_strans.hora
-      @lat = vehicle_strans.lat
-      @long = vehicle_strans.long
-      @line = Line.new.merge(vehicle_strans.linha)
-    end
+    return nil if vehicle_strans.nil?
+
+    @code = vehicle_strans.codigoVeiculo
+    @time = vehicle_strans.hora
+    @lat = vehicle_strans.lat
+    @long = vehicle_strans.long
+    @line = Line.new.merge(vehicle_strans.linha)
   end
 
   def as_json(_options = nil)

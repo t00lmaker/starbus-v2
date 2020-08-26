@@ -6,7 +6,7 @@ require 'rabl'
 require 'grape'
 require 'rack/cors'
 require 'otr-activerecord'
-require_relative 'starbus-api'
+require_relative 'starbus_api'
 
 CONFIG_ENV = ENV['RACK_ENV'] || 'development'
 
