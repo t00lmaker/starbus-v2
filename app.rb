@@ -25,7 +25,9 @@ app = Rack::Builder.new do
       resource '*', headers: :any, methods: %i[get post options put]
     end
   end
-  use Rack::Config do |env| env['api.tilt.root'] = 'rabl' end
+  use Rack::Config do |env|
+    env['api.tilt.root'] = 'rabl'
+  end
   use OTR::ActiveRecord::ConnectionManagement
   run StarBus::API.new
 end.to_app

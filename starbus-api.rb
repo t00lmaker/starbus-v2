@@ -437,5 +437,5 @@ module StarBus
         end
       end
     end
-  end # class
-end # module
+  end
+end
