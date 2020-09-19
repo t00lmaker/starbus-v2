@@ -3,7 +3,7 @@
 require 'yaml'
 require 'bundler/setup'
 
-require_relative 'starbus-api'
+require_relative 'starbus_api'
 require_relative 'model/line'
 require_relative 'model/stop'
 
